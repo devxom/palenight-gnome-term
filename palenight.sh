@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Base16 - Gnome Terminal color scheme install script
 
-[[ -z "$PROFILE_NAME" ]] && PROFILE_NAME="palenigth"
-[[ -z "$PROFILE_SLUG" ]] && PROFILE_SLUG="base16-material-palenigth"
+[[ -z "$PROFILE_NAME" ]] && PROFILE_NAME="palenight"
+[[ -z "$PROFILE_SLUG" ]] && PROFILE_SLUG="base16-material-palenight"
 [[ -z "$DCONF" ]] && DCONF=dconf
 [[ -z "$UUIDGEN" ]] && UUIDGEN=uuidgen
 
