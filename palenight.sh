@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 # Base16 - Gnome Terminal color scheme install script
 
+# Check if a default profile is set
+dconfdir=/org/gnome/terminal/legacy/profiles:
+create_new_profile() {
+  profile_id="$(uuidgen)"
+  dconf write $dconfdir/default "'$profile_id'"
+  dconf write $dconfdir/list "['$profile_id']"
+  profile_dir="$dconfdir/:$profile_id"
+  dconf write $profile_dir/visible-name "'Default'"
+}
+profiles=($(dconf list /org/gnome/terminal/legacy/profiles:/))
+if [ "$profiles" = "" ]
+  then create_new_profile
+fi
+
+
 [[ -z "$PROFILE_NAME" ]] && PROFILE_NAME="palenight"
 [[ -z "$PROFILE_SLUG" ]] && PROFILE_SLUG="base16-material-palenight"
 [[ -z "$DCONF" ]] && DCONF=dconf
@@ -65,7 +80,7 @@ if which "$DCONF" > /dev/null 2>&1; then
         dset bold-color-same-as-fg "true"
         dset use-theme-colors "false"
         dset use-theme-background "false"
-
+	dset default "'$UUIDGEN'"
         unset PROFILE_NAME
         unset PROFILE_SLUG
         unset DCONF
@@ -75,7 +90,7 @@ if which "$DCONF" > /dev/null 2>&1; then
 fi
 
 # Fallback for Gnome 2 and early Gnome 3
-[[ -z "$GCONFTOOL" ]] && GCONFTOOL=gconftool
+[[ -z "$GCONFTOOL" ]] && GCONFTOOL=gconftool-2
 [[ -z "$BASE_KEY" ]] && BASE_KEY=/apps/gnome-terminal/profiles
 
 PROFILE_KEY="$BASE_KEY/$PROFILE_SLUG"
